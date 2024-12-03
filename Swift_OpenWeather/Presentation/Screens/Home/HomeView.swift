@@ -10,63 +10,81 @@ struct HomeView: View {
             Text(viewModel.greetingMessage)
                 .font(.headline)
             
-            Form {
-                Section {
+            Spacer()
+            
+            if $viewModel.forecast.isEmpty {
+                ContentUnavailableView("Error", systemImage: "exclamationmark.circle", description: Text("Error mengambil data cuaca di kota \(city)"))
+            } else {
+                VStack {
                     if let weather = viewModel.currentWeather {
-                        Text("Kota: \(weather.location)")
-                        Text("Temperatur: \(weather.temperature.formatted(.number.precision(.fractionLength(1))))°C")
-                        Text("Cuaca: \(viewModel.translateWeather(weather:weather.condition))")
+                        Text(weather.location)
+                            .font(.largeTitle)
+                            .fontWeight(.medium)
+                        
+                        Text("\(weather.temperature.formatted(.number.precision(.fractionLength(0))))°C")
+                            .font(.system(size: 80))
+                            .fontWeight(.light)
+                        
+                        Text(viewModel.translateWeather(weather:weather.condition))
+                            .font(.headline)
+                            .foregroundStyle(.secondary)
                     }
                 }
                 
-                Section {
-                    if $viewModel.forecast.isEmpty {
-                        Text("Loading...")
-                    } else {
-                        Text("Forecast Cuaca 5 Hari ke Depan")
-                            .textCase(.uppercase)
-                        ForEach(viewModel.forecast) { forecast in
-                            HStack {
-                                Text(forecast.date)
-                                
-                                Spacer()
-                                
-                                Text("\(forecast.temperature.formatted(.number.precision(.fractionLength(1))))°C")
-                                
-                                Spacer()
-                                
-                                AsyncImage(url: URL(string:"https://openweathermap.org/img/wn/\(forecast.icon)@2x.png")) { phase in
-                                    switch phase {
-                                    case .empty:
-                                        ProgressView()
-                                            .frame(width: 100, height: 100)
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(height: 100)
-                                    case .failure:
-                                        Image(systemName: "exclamationmark.triangle")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(height: 100)
-                                            .foregroundColor(.gray)
-                                    @unknown default:
-                                        Image(systemName: "exclamationmark.triangle")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(height: 100)
-                                            .foregroundColor(.gray)
-                                    }
+                Spacer()
+                
+                LazyVStack {
+                    Text("Forecast Cuaca 5 Hari ke Depan")
+                        .textCase(.uppercase)
+                    
+                    ForEach(viewModel.forecast) { forecast in
+                        Divider()
+                        
+                        HStack {
+                            Text(forecast.date)
+                            
+                            Spacer()
+                            
+                            Text("\(forecast.temperature.formatted(.number.precision(.fractionLength(0))))°C")
+                            
+                            Spacer()
+                            
+                            AsyncImage(url: URL(string:"https://openweathermap.org/img/wn/\(forecast.icon)@2x.png")) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                        .frame(width: 60, height: 60)
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 60)
+                                case .failure:
+                                    Image(systemName: "exclamationmark.triangle")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundStyle(Color.secondary)
+                                        .padding(12)
+                                        .frame(width: 60, height: 60)
+                                @unknown default:
+                                    Image(systemName: "exclamationmark.triangle")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundStyle(Color.secondary)
+                                        .padding(12)
+                                        .frame(width: 60, height: 60)
                                 }
-                                
-                                Text(viewModel.translateWeather(weather:forecast.condition))
                             }
+                            
+                            Text(viewModel.translateWeather(weather:forecast.condition))
                         }
                     }
                 }
             }
+            
+            Spacer()
         }
+        .padding()
         .task {
             do {
                 try await viewModel.getWeatherData()
