@@ -39,23 +39,23 @@ struct HomeView: View {
                                     switch phase {
                                     case .empty:
                                         ProgressView()
-                                            .frame(width: 50, height: 50)
+                                            .frame(width: 100, height: 100)
                                     case .success(let image):
                                         image
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(height: 50)
+                                            .frame(height: 100)
                                     case .failure:
                                         Image(systemName: "exclamationmark.triangle")
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(height: 50)
+                                            .frame(height: 100)
                                             .foregroundColor(.gray)
                                     @unknown default:
                                         Image(systemName: "exclamationmark.triangle")
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(height: 50)
+                                            .frame(height: 100)
                                             .foregroundColor(.gray)
                                     }
                                 }
