@@ -6,6 +6,8 @@ class HomeViewModel: ObservableObject {
     @Published var city: String = ""
     @Published var currentWeather: CurrentWeather?
     @Published var forecast: [Forecast] = []
+    @Published var weatherData: WeatherData? = nil
+    @Published var forecastData: ForecastData? = nil
     
     private let weatherService = WeatherService()
     
@@ -13,26 +15,38 @@ class HomeViewModel: ObservableObject {
         "Selamat datang, \(name)!"
     }
     
-    func fetchWeather() {
-        guard !city.isEmpty else { return }
-        
-        weatherService.fetchWeather(for: city) { [weak self] weatherData in
-            DispatchQueue.main.async {
-                if let weatherData = weatherData {
-                    self?.currentWeather = CurrentWeather(from: weatherData)
-                } else {
-                    print("Failed to fetch current weather data")
-                }
+    func getWeatherData() async throws -> CurrentWeather? {
+        do {
+            weatherData = try await weatherService.getWeather(city: city)
+            guard let weatherData = weatherData else {
+                print("Failed to retrieve weather data.")
+                return nil // Return nil if the unwrapped value is nil
             }
+            currentWeather = CurrentWeather(from: weatherData)
+            return currentWeather
+        } catch {
+            print("Unexpected error: \(error.localizedDescription)")
+            throw error
         }
-        
-        weatherService.fetchForecast(for: city) { [weak self] forecastData in
-            guard let forecastData = forecastData?.list else { return }
+    }
+    
+    func getForecastData() async throws {
+        do {
+            forecastData = try await weatherService.getWeatherForecast(city: city)
             
-            let dailyForecasts = self?.filterDailyForecasts(from: forecastData) ?? []
-            DispatchQueue.main.async {
-                self?.forecast = dailyForecasts
+            guard let forecastList = forecastData?.list else {
+                print("Failed to retrieve forecast list.")
+                return
             }
+            
+            let dailyForecasts = filterDailyForecasts(from: forecastList)
+            
+            DispatchQueue.main.async {
+                self.forecast = dailyForecasts
+            }
+        } catch {
+            print("Unexpected error: \(error.localizedDescription)")
+            throw error
         }
     }
     
