@@ -101,5 +101,7 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(name: .constant("Balya"), city: .constant("Jakarta"))
+    NavigationStack {
+        HomeView(name: .constant("Balya Elfata"), city: .constant("Tangerang"))
+    }
 }
