@@ -26,17 +26,22 @@ struct SearchableDropdown: View {
                         Text(viewModel.selectedCity)
                             .font(.title3)
                             .fontWeight(.semibold)
+                            .foregroundStyle(Color.primary)
                     } else {
                         Text(viewModel.selectedProvince)
                             .font(.title3)
                             .fontWeight(.semibold)
+                            .foregroundStyle(Color.primary)
                     }
                     Spacer()
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                        .foregroundStyle(Color.primary)
                 }
                 .padding()
-                .background(Color.blue.opacity(0.1))
-                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.secondary, lineWidth: 2)
+                )
             }
             
             if isExpanded {
