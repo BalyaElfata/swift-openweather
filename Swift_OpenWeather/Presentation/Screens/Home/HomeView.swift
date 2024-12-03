@@ -71,14 +71,8 @@ struct HomeView: View {
             do {
                 try await viewModel.getWeatherData()
                 try await viewModel.getForecastData()
-            } catch WeatherError.invalidURL {
-                print("Invalid URL")
-            } catch WeatherError.invalidResponse {
-                print("Invalid response")
-            } catch WeatherError.invalidData {
-                print("Invalid data")
             } catch {
-                print("unexpected error")
+                print("Error catching data")
             }
         }
         .onAppear {

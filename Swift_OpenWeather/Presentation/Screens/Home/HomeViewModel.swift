@@ -24,6 +24,12 @@ class HomeViewModel: ObservableObject {
             }
             currentWeather = CurrentWeather(from: weatherData)
             return
+        } catch WeatherError.invalidURL {
+            print("Invalid URL")
+        } catch WeatherError.invalidResponse {
+            print("Invalid response")
+        } catch WeatherError.invalidData {
+            print("Invalid data")
         } catch {
             print("Unexpected error: \(error.localizedDescription)")
         }
