@@ -4,8 +4,9 @@ import SwiftUI
 class FormViewModel: ObservableObject {
     @Published var provinces: [String] = []
     @Published var cities: [String] = []
-    @Published var selectedProvince: String = ""
-    @Published var selectedCity: String = ""
+    @Published var selectedProvince: String = "Pilih Provinsi"
+    @Published var selectedCity: String = "Pilih Kota"
+    @Published var searchText = ""
 
     private var provinceCityMapping: [String: [String]] = [:]
     private var cancellables = Set<AnyCancellable>()

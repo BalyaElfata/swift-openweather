@@ -7,7 +7,7 @@ struct FormView: View {
     @State var city: String = ""
     @State private var isValid: Bool = false
     @State private var navigateToHome: Bool = false
-    @ObservedObject private var viewModel = FormViewModel()
+    @StateObject private var viewModel = FormViewModel()
 
     var body: some View {
         NavigationStack {
@@ -15,25 +15,11 @@ struct FormView: View {
                 TextField("Nama Lengkap", text: $name)
                     .textFieldStyle(.roundedBorder)
                 
-                HStack {
-                    Text("Pilih Provinsi:")
-                    Picker("Pilih Provinsi", selection: $province) {
-                        ForEach(viewModel.provinces, id: \.self) { province in
-                            Text(province).tag(province)
-                        }
-                    }
-                }
+                SearchableDropdown(type: .province, options: viewModel.provinces)
+                    .environmentObject(viewModel)
                 
-                if !province.isEmpty {
-                    HStack {
-                        Text("Pilih Kota:")
-                        Picker("Pilih Kota", selection: $city) {
-                            ForEach(viewModel.cities(for: province), id: \.self) { city in
-                                Text(city).tag(city)
-                            }
-                        }
-                    }
-                }
+                SearchableDropdown(type: .city, options: viewModel.cities(for: viewModel.selectedProvince))
+                    .environmentObject(viewModel)
                 
                 Button("Proses") {
                     if viewModel.validateInputs(name: name, province: province, city: city) {
@@ -50,13 +36,16 @@ struct FormView: View {
                 HomeView(name: $name, city: $city)
             })
             .onChange(of: name) { validateForm() }
-            .onChange(of: province) { validateForm() }
-            .onChange(of: city) { validateForm() }
+            .onChange(of: viewModel.selectedProvince) {
+                viewModel.selectedCity = "Pilih Kota"
+                validateForm()
+            }
+            .onChange(of: viewModel.selectedCity) { validateForm() }
         }
     }
 
     private func validateForm() {
-        isValid = !name.isEmpty && !province.isEmpty && !city.isEmpty
+        isValid = !name.isEmpty && viewModel.selectedProvince != "Pilih Provinsi" && viewModel.selectedCity != "Pilih Kota"
     }
 }
 
