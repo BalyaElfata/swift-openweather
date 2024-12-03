@@ -34,6 +34,7 @@ struct FormView: View {
                 .disabled(!isValid)
             }
             .padding()
+            .navigationTitle("Pengisian Data")
             .navigationDestination(isPresented: $navigateToHome, destination: {
                 HomeView(name: $name, city: $city)
             })
