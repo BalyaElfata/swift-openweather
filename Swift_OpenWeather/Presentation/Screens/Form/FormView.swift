@@ -13,6 +13,8 @@ struct FormView: View {
         NavigationStack {
             VStack(spacing: 20) {
                 TextField("Nama Lengkap", text: $name)
+                    .font(.title3)
+                    .fontWeight(.semibold)
                     .textFieldStyle(.roundedBorder)
                 
                 SearchableDropdown(type: .province, options: viewModel.provinces)

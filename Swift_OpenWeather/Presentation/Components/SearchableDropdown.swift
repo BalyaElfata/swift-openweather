@@ -24,8 +24,12 @@ struct SearchableDropdown: View {
                 HStack {
                     if type == .city {
                         Text(viewModel.selectedCity)
+                            .font(.title3)
+                            .fontWeight(.semibold)
                     } else {
                         Text(viewModel.selectedProvince)
+                            .font(.title3)
+                            .fontWeight(.semibold)
                     }
                     Spacer()
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
@@ -59,7 +63,6 @@ struct SearchableDropdown: View {
                 .shadow(radius: 5)
             }
         }
-        .padding()
     }
 }
 #Preview {
