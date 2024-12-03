@@ -58,7 +58,7 @@ struct HomeView: View {
         }
         .task {
             do {
-                viewModel.currentWeather = try await viewModel.getWeatherData()
+                try await viewModel.getWeatherData()
                 try await viewModel.getForecastData()
             } catch {
                 

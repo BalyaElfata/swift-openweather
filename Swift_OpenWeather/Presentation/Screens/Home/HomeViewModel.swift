@@ -15,15 +15,15 @@ class HomeViewModel: ObservableObject {
         "Selamat datang, \(name)!"
     }
     
-    func getWeatherData() async throws -> CurrentWeather? {
+    func getWeatherData() async throws {
         do {
             weatherData = try await weatherService.getWeather(city: city)
             guard let weatherData = weatherData else {
                 print("Failed to retrieve weather data.")
-                return nil // Return nil if the unwrapped value is nil
+                return 
             }
             currentWeather = CurrentWeather(from: weatherData)
-            return currentWeather
+            return
         } catch {
             print("Unexpected error: \(error.localizedDescription)")
             throw error
