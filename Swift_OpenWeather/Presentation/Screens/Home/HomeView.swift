@@ -26,29 +26,38 @@ struct HomeView: View {
                         ForEach(viewModel.forecast) { forecast in
                             HStack {
                                 Text(forecast.date)
+                                
                                 Spacer()
+                                
                                 Text("\(forecast.temperature.formatted(.number.precision(.fractionLength(1))))°C")
+                                
                                 Spacer()
+                                
                                 AsyncImage(url: URL(string:"https://openweathermap.org/img/wn/\(forecast.icon)@2x.png")) { phase in
                                     switch phase {
                                     case .empty:
                                         ProgressView()
-                                            .frame(width: 130, height: 70)
+                                            .frame(width: 100, height: 100)
                                     case .success(let image):
                                         image
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: 130, height: 70)
+                                            .frame(height: 100)
                                     case .failure:
-                                        Image(systemName: "photo")
+                                        Image(systemName: "exclamationmark.triangle")
                                             .resizable()
                                             .scaledToFit()
-                                            .frame(width: 130, height: 70)
+                                            .frame(height: 100)
                                             .foregroundColor(.gray)
                                     @unknown default:
-                                        EmptyView()
+                                        Image(systemName: "exclamationmark.triangle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(height: 100)
+                                            .foregroundColor(.gray)
                                     }
                                 }
+                                
                                 Text(viewModel.translateWeather(weather:forecast.condition))
                             }
                         }
