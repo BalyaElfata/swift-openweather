@@ -26,7 +26,6 @@ class HomeViewModel: ObservableObject {
             return
         } catch {
             print("Unexpected error: \(error.localizedDescription)")
-            throw error
         }
     }
     
@@ -46,7 +45,6 @@ class HomeViewModel: ObservableObject {
             }
         } catch {
             print("Unexpected error: \(error.localizedDescription)")
-            throw error
         }
     }
     
