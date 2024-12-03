@@ -51,10 +51,12 @@ struct HomeView: View {
                                 
                                 HStack {
                                     Text(forecast.date)
+                                        .fontWeight(.medium)
                                     
                                     Spacer()
                                     
                                     Text("\(forecast.temperature.formatted(.number.precision(.fractionLength(0))))°C")
+                                        .fontWeight(.medium)
                                     
                                     Spacer()
                                     
@@ -86,6 +88,7 @@ struct HomeView: View {
                                     }
                                     
                                     Text(viewModel.translateWeather(weather:forecast.condition))
+                                        .fontWeight(.medium)
                                 }
                             }
                         }
