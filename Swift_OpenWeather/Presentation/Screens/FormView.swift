@@ -3,8 +3,8 @@ import SwiftData
 
 struct FormView: View {
     @State var name: String = ""
-    @State private var selectedProvince: String = ""
-    @State var selectedCity: String = ""
+    @State private var province: String = ""
+    @State var city: String = ""
     @State private var isValid: Bool = false
     @State private var navigateToHome: Bool = false
     @ObservedObject private var viewModel = FormViewModel()
@@ -17,18 +17,18 @@ struct FormView: View {
                 
                 HStack {
                     Text("Pilih Provinsi:")
-                    Picker("Pilih Provinsi", selection: $selectedProvince) {
+                    Picker("Pilih Provinsi", selection: $province) {
                         ForEach(viewModel.provinces, id: \.self) { province in
                             Text(province).tag(province)
                         }
                     }
                 }
                 
-                if !selectedProvince.isEmpty {
+                if !province.isEmpty {
                     HStack {
                         Text("Pilih Kota:")
-                        Picker("Pilih Kota", selection: $selectedCity) {
-                            ForEach(viewModel.cities(for: selectedProvince), id: \.self) { city in
+                        Picker("Pilih Kota", selection: $city) {
+                            ForEach(viewModel.cities(for: province), id: \.self) { city in
                                 Text(city).tag(city)
                             }
                         }
@@ -36,7 +36,7 @@ struct FormView: View {
                 }
                 
                 Button("Proses") {
-                    if viewModel.validateInputs(name: name, province: selectedProvince, city: selectedCity) {
+                    if viewModel.validateInputs(name: name, province: province, city: city) {
                         navigateToHome = true
                     } else {
                         // Show validation error
@@ -47,16 +47,16 @@ struct FormView: View {
             }
             .padding()
             .navigationDestination(isPresented: $navigateToHome, destination: {
-                HomeView(name: $name, city: $selectedCity)
+                HomeView(name: $name, city: $city)
             })
             .onChange(of: name) { validateForm() }
-            .onChange(of: selectedProvince) { validateForm() }
-            .onChange(of: selectedCity) { validateForm() }
+            .onChange(of: province) { validateForm() }
+            .onChange(of: city) { validateForm() }
         }
     }
 
     private func validateForm() {
-        isValid = !name.isEmpty && !selectedProvince.isEmpty && !selectedCity.isEmpty
+        isValid = !name.isEmpty && !province.isEmpty && !city.isEmpty
     }
 }
 
