@@ -51,19 +51,15 @@ class HomeViewModel: ObservableObject {
     }
     
     private func filterDailyForecasts(from forecasts: [ForecastWeather]) -> [Forecast] {
-        let today = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let todayString = dateFormatter.string(from: today)
-        
         let groupedByDate = Dictionary(grouping: forecasts) { forecast in
             let date = Date(timeIntervalSince1970: TimeInterval(forecast.dt))
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             return dateFormatter.string(from: date)
         }
         
-        let filteredForecasts: [Forecast] = groupedByDate.compactMap { (date, forecasts) in
-            guard date != todayString else { return nil }
-            return forecasts.min(by: { abs($0.dt - 43200) < abs($1.dt - 43200) })
+        let filteredForecasts: [Forecast] = groupedByDate.compactMap { (_, forecasts) in
+            forecasts.min(by: { abs($0.dt - 43200) < abs($1.dt - 43200) })
         }.map { Forecast(from: $0) }
         
         return filteredForecasts.sorted { $0.date < $1.date }
