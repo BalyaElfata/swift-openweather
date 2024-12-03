@@ -11,6 +11,7 @@ struct FormView: View {
                     .font(.title3)
                     .fontWeight(.semibold)
                     .textFieldStyle(.roundedBorder)
+                    .textInputAutocapitalization(.words)
                 
                 SearchableDropdown(type: .province, options: viewModel.provinces)
                     .environmentObject(viewModel)
