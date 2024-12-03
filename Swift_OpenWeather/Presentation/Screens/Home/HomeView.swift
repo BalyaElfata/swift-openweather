@@ -14,7 +14,7 @@ struct HomeView: View {
                 Section(header: Text("Cuaca Hari Ini")) {
                     if let weather = viewModel.currentWeather {
                         Text("Kota: \(weather.location)")
-                        Text("Temperatur: \(weather.temperature.formatted(.number.rounded(increment: 1.0)))°C")
+                        Text("Temperatur: \(weather.temperature.formatted(.number.precision(.fractionLength(1))))°C")
                         Text("Cuaca: \(viewModel.translateWeather(weather:weather.condition))")
                     }
                 }
