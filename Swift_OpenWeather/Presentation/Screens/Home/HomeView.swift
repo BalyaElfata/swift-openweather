@@ -11,7 +11,7 @@ struct HomeView: View {
                 .font(.headline)
             
             Form {
-                Section(header: Text("Cuaca Hari Ini")) {
+                Section {
                     if let weather = viewModel.currentWeather {
                         Text("Kota: \(weather.location)")
                         Text("Temperatur: \(weather.temperature.formatted(.number.precision(.fractionLength(1))))°C")
@@ -19,10 +19,12 @@ struct HomeView: View {
                     }
                 }
                 
-                Section(header: Text("Cuaca 5 hari ke depan")) {
+                Section {
                     if $viewModel.forecast.isEmpty {
                         Text("Loading...")
                     } else {
+                        Text("Forecast Cuaca 5 Hari ke Depan")
+                            .textCase(.uppercase)
                         ForEach(viewModel.forecast) { forecast in
                             HStack {
                                 Text(forecast.date)
