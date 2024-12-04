@@ -34,11 +34,11 @@ struct FormView: View {
                 HomeView(name: $viewModel.name, city: $viewModel.selectedCity)
             })
             .sheet(isPresented: $viewModel.isSelectingProvince, content: {
-                OptionsList(type: .province, options: viewModel.provinces.map{$0.name})
+                SearchableDropdown(type: .province, options: viewModel.provinces.map{$0.name})
                     .environmentObject(viewModel)
             })
             .sheet(isPresented: $viewModel.isSelectingCity, content: {
-                OptionsList(type: .city, options: viewModel.cities.map{$0.name})
+                SearchableDropdown(type: .city, options: viewModel.cities.map{$0.name})
                     .environmentObject(viewModel)
             })
             .task {

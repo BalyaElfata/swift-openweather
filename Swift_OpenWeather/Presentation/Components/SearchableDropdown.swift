@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OptionsList: View {
+struct SearchableDropdown: View {
     @EnvironmentObject var viewModel: FormViewModel
     var type: DropdownType
     let options: [String]
@@ -45,6 +45,6 @@ struct OptionsList: View {
 }
 
 #Preview {
-    OptionsList(type: .province, options: ["Holly", "Josh", "Rhonda", "Ted"])
+    SearchableDropdown(type: .province, options: ["Holly", "Josh", "Rhonda", "Ted"])
         .environmentObject(FormViewModel())
 }
