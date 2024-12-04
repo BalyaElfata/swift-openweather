@@ -8,8 +8,10 @@ struct SearchableDropdown: View {
 
     var body: some View {
         NavigationStack {
-            if $viewModel.provinces.isEmpty {
-                ContentUnavailableView("Error", systemImage: "exclamationmark.circle", description: Text("Error mengambil data provinsi. Cek kembali koneksi anda dan ulangi."))
+            if networkManager.isConnected == false {
+                ContentUnavailableView("Network Error", systemImage: "wifi.slash", description: Text("Koneksi Error. Cek kembali koneksi anda dan ulangi."))
+            } else if $viewModel.provinces.isEmpty {
+                ContentUnavailableView("API Error", systemImage: "exclamationmark.circle", description: Text("Error mengambil data \(type == .province ? "provinsi" : "kota")."))
             } else {
                 List {
                     ForEach(searchResults, id: \.self) { option in
