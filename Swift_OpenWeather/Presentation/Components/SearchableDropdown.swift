@@ -7,7 +7,7 @@ struct SearchableDropdown: View {
     let options: [String]
 
     var body: some View {
-        NavigationStack {
+        VStack {
             if networkManager.isConnected == false {
                 ContentUnavailableView("Network Error", systemImage: "wifi.slash", description: Text("Koneksi Error. Cek kembali koneksi anda dan ulangi."))
             } else if $viewModel.provinces.isEmpty {
@@ -30,9 +30,9 @@ struct SearchableDropdown: View {
                         }
                     }
                 }
-                .searchable(text: $viewModel.searchText)
             }
         }
+        .searchable(text: $viewModel.searchText)
     }
 
     var searchResults: [String] {
@@ -45,7 +45,9 @@ struct SearchableDropdown: View {
 }
 
 #Preview {
-    SearchableDropdown(type: .province, options: ["Holly", "Josh", "Rhonda", "Ted"])
-        .environmentObject(FormViewModel())
-        .environmentObject(NetworkManager())
+    NavigationStack {
+        SearchableDropdown(type: .province, options: ["Holly", "Josh", "Rhonda", "Ted"])
+            .environmentObject(FormViewModel())
+            .environmentObject(NetworkManager())
+    }
 }
