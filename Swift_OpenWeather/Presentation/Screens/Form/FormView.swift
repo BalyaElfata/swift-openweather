@@ -3,6 +3,7 @@ import SwiftData
 
 struct FormView: View {
     @StateObject private var viewModel = FormViewModel()
+    @EnvironmentObject var networkManager : NetworkManager
 
     var body: some View {
         NavigationStack {
@@ -36,10 +37,12 @@ struct FormView: View {
             .sheet(isPresented: $viewModel.isSelectingProvince, content: {
                 SearchableDropdown(type: .province, options: viewModel.provinces.map{$0.name})
                     .environmentObject(viewModel)
+                    .environmentObject(networkManager)
             })
             .sheet(isPresented: $viewModel.isSelectingCity, content: {
                 SearchableDropdown(type: .city, options: viewModel.cities.map{$0.name})
                     .environmentObject(viewModel)
+                    .environmentObject(networkManager)
             })
             .task {
                 do {
@@ -63,4 +66,5 @@ struct FormView: View {
 
 #Preview {
     FormView()
+        .environmentObject(NetworkManager())
 }

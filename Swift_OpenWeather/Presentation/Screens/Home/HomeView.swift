@@ -4,6 +4,7 @@ struct HomeView: View {
     @Binding var name: String
     @Binding var city: String
     @StateObject private var viewModel = HomeViewModel()
+    @EnvironmentObject var networkManager : NetworkManager
     
     var body: some View {
         ZStack {
@@ -123,5 +124,6 @@ struct HomeView: View {
 #Preview {
     NavigationStack {
         HomeView(name: .constant("Balya Elfata"), city: .constant("Tangerang"))
+            .environmentObject(NetworkManager())
     }
 }

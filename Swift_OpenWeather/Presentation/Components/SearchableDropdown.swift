@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SearchableDropdown: View {
     @EnvironmentObject var viewModel: FormViewModel
+    @EnvironmentObject var networkManager : NetworkManager
     var type: DropdownType
     let options: [String]
 
@@ -44,4 +45,5 @@ struct SearchableDropdown: View {
 #Preview {
     SearchableDropdown(type: .province, options: ["Holly", "Josh", "Rhonda", "Ted"])
         .environmentObject(FormViewModel())
+        .environmentObject(NetworkManager())
 }
