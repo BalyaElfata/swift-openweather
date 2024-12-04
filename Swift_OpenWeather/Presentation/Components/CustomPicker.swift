@@ -4,7 +4,7 @@ enum DropdownType {
     case city, province
 }
 
-struct SearchableDropdown: View {
+struct CustomPicker: View {
     @EnvironmentObject var viewModel: FormViewModel
     var type: DropdownType
     var options: [String] = []
@@ -80,7 +80,7 @@ struct SearchableDropdown: View {
 }
 #Preview {
     NavigationStack {
-        SearchableDropdown(type: .province, options: FormViewModel().provinces.map { $0.name })
+        CustomPicker(type: .province, options: FormViewModel().provinces.map { $0.name })
             .environmentObject(FormViewModel())
     }
 }

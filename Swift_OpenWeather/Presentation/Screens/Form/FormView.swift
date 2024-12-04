@@ -13,9 +13,9 @@ struct FormView: View {
                     .textFieldStyle(.roundedBorder)
                     .textInputAutocapitalization(.words)
                 
-                SearchableDropdown(type: .province, options: viewModel.provinces.map{$0.name})
+                CustomPicker(type: .province, options: viewModel.provinces.map{$0.name})
                         .environmentObject(viewModel)
-                SearchableDropdown(type: .city, options: viewModel.cities.map{$0.name})
+                CustomPicker(type: .city, options: viewModel.cities.map{$0.name})
                         .environmentObject(viewModel)
                 
                 Button("Proses") {
