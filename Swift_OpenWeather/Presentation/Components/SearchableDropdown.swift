@@ -5,10 +5,9 @@ enum DropdownType {
 }
 
 struct SearchableDropdown: View {
-    @State private var isExpanded = false
     @EnvironmentObject var viewModel: FormViewModel
     var type: DropdownType
-    var options: [String]
+    var options: [String] = []
     
     var filteredOptions: [String] {
         if viewModel.searchText.isEmpty {
@@ -19,8 +18,14 @@ struct SearchableDropdown: View {
     }
     
     var body: some View {
-        VStack {
-            Button(action: { isExpanded.toggle() }) {
+        Button {
+            if type == .province {
+                viewModel.isSelectingProvince = true
+            } else {
+                viewModel.isSelectingCity = true
+            }
+        } label: {
+            VStack {
                 HStack {
                     if type == .city {
                         Text(viewModel.selectedCity)
@@ -34,7 +39,7 @@ struct SearchableDropdown: View {
                             .foregroundStyle(Color.primary)
                     }
                     Spacer()
-                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                    Image(systemName: "chevron.down")
                         .foregroundStyle(Color.primary)
                 }
                 .padding()
@@ -43,34 +48,39 @@ struct SearchableDropdown: View {
                         .stroke(Color.secondary, lineWidth: 2)
                 )
             }
-            
-            if isExpanded {
-                VStack {
-                    TextField("Search...", text: $viewModel.searchText)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                    
-                    ForEach(filteredOptions, id: \.self) { option in
-                        Text(option)
-                            .padding()
-                            .onTapGesture {
-                                if type == .province {
-                                    viewModel.selectedProvince = option
-                                } else {
-                                    viewModel.selectedCity = option
-                                }
-                                isExpanded = false
-                            }
-                    }
-                }
-                .background(Color.white)
-                .cornerRadius(8)
-                .shadow(radius: 5)
-            }
         }
+            
+//            if isExpanded {
+//                VStack {
+//                    TextField("Search...", text: $viewModel.searchText)
+//                        .textFieldStyle(RoundedBorderTextFieldStyle())
+//                        .padding()
+//                    
+//                    ScrollView {
+//                        ForEach(filteredOptions, id: \.self) { option in
+//                            Text(option)
+//                                .padding()
+//                                .onTapGesture {
+//                                    if type == .province {
+//                                        viewModel.selectedProvince = option
+//                                    } else {
+//                                        viewModel.selectedCity = option
+//                                    }
+//                                    isExpanded = false
+//                                }
+//                        }
+//                    }
+//                }
+//                .background(Color.white)
+//                .cornerRadius(8)
+//                .shadow(radius: 5)
+//            }
+//        }
     }
 }
 #Preview {
-    SearchableDropdown(type: .province, options: FormViewModel().provinces)
-        .environmentObject(FormViewModel())
+    NavigationStack {
+        SearchableDropdown(type: .province, options: FormViewModel().provinces.map { $0.name })
+            .environmentObject(FormViewModel())
+    }
 }

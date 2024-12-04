@@ -13,11 +13,10 @@ struct FormView: View {
                     .textFieldStyle(.roundedBorder)
                     .textInputAutocapitalization(.words)
                 
-                SearchableDropdown(type: .province, options: viewModel.provinces)
-                    .environmentObject(viewModel)
-                
-                SearchableDropdown(type: .city, options: viewModel.cities(for: viewModel.selectedProvince))
-                    .environmentObject(viewModel)
+                SearchableDropdown(type: .province, options: viewModel.provinces.map{$0.name})
+                        .environmentObject(viewModel)
+                SearchableDropdown(type: .city, options: viewModel.cities.map{$0.name})
+                        .environmentObject(viewModel)
                 
                 Button("Proses") {
                     if viewModel.isValid {
@@ -34,9 +33,27 @@ struct FormView: View {
             .navigationDestination(isPresented: $viewModel.navigateToHome, destination: {
                 HomeView(name: $viewModel.name, city: $viewModel.selectedCity)
             })
+            .sheet(isPresented: $viewModel.isSelectingProvince, content: {
+                OptionsList(type: .province, options: viewModel.provinces.map{$0.name})
+                    .environmentObject(viewModel)
+            })
+            .sheet(isPresented: $viewModel.isSelectingCity, content: {
+                OptionsList(type: .city, options: viewModel.cities.map{$0.name})
+                    .environmentObject(viewModel)
+            })
+            .task {
+                do {
+                    try await viewModel.getProvinces()
+                } catch {
+                    print("Error catching data")
+                }
+            }
             .onChange(of: viewModel.name) { viewModel.validateForm() }
             .onChange(of: viewModel.selectedProvince) {
                 viewModel.selectedCity = "Pilih Kota"
+                Task {
+                    try await viewModel.getCities()
+                }
                 viewModel.validateForm()
             }
             .onChange(of: viewModel.selectedCity) { viewModel.validateForm() }
