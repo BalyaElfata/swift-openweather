@@ -67,7 +67,7 @@ struct HomeView: View {
                                     
                                     Spacer()
                                     
-                                    AsyncImage(url: URL(string:"https://openweathermap.org/img/wn/\(forecast.icon)@2x.png")) { phase in
+                                    AsyncImage(url: URL(string:"https://openweathermap.org/img/wn/\(String(forecast.icon.dropLast(1)))d@2x.png")) { phase in
                                         switch phase {
                                         case .empty:
                                             ProgressView()
