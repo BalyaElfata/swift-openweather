@@ -1,11 +1,11 @@
 import Foundation
 
 class WeatherService {
-    private let apiKey = "39be9a0b8f3a74ade269205d2bc11fc5"
+    private let apiKey = ProcessInfo.processInfo.environment["API_KEY"] // API_KEY in environment variable
     private let baseUrl = "https://api.openweathermap.org/data/2.5"
 
     func getWeather(city: String) async throws -> WeatherData {
-        let urlString = "\(baseUrl)/weather?q=\(city)&units=metric&lang=id&appid=\(apiKey)"
+        let urlString = "\(baseUrl)/weather?q=\(city)&units=metric&lang=id&appid=\(apiKey ?? "")"
         
         guard let url = URL(string: urlString) else {
             throw WeatherError.invalidURL
@@ -27,7 +27,7 @@ class WeatherService {
     }
     
     func getWeatherForecast(city: String) async throws -> ForecastData {
-        let urlString = "\(baseUrl)/forecast?q=\(city)&units=metric&lang=id&appid=\(apiKey)"
+        let urlString = "\(baseUrl)/forecast?q=\(city)&units=metric&lang=id&appid=\(apiKey ?? "")"
         
         guard let url = URL(string: urlString) else {
             throw WeatherError.invalidURL
