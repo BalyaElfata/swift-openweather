@@ -1,55 +1,53 @@
 import Foundation
 
-class WeatherService {
-    private let apiKey = "39be9a0b8f3a74ade269205d2bc11fc5"
+class RegionService {
     private let provinceUrl = "https://wilayah.id/api/provinces.json"
 
-    func getWeather(city: String) async throws -> WeatherData {
-        let urlString = "\(baseUrl)/weather?q=\(city)&units=metric&lang=id&appid=\(apiKey)"
+    func getProvinces() async throws -> ProvinceData {
         
-        guard let url = URL(string: urlString) else {
-            throw WeatherError.invalidURL
+        guard let url = URL(string: provinceUrl) else {
+            throw RegionError.invalidURL
         }
         
         let (data, response) = try await URLSession.shared.data(from: url)
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw WeatherError.invalidResponse
+            throw RegionError.invalidResponse
         }
         
         do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
-            return try decoder.decode(WeatherData.self, from: data)
+            return try decoder.decode(ProvinceData.self, from: data)
         } catch {
-            throw WeatherError.invalidData
+            throw RegionError.invalidData
         }
     }
     
-    func getWeatherForecast(city: String) async throws -> ForecastData {
-        let urlString = "\(baseUrl)/forecast?q=\(city)&units=metric&lang=id&appid=\(apiKey)"
+    func getCities(provinceCode: String) async throws -> CityData {
+        let urlString = "https://wilayah.id/api/regencies/\(provinceCode).json"
         
         guard let url = URL(string: urlString) else {
-            throw WeatherError.invalidURL
+            throw RegionError.invalidURL
         }
         
         let (data, response) = try await URLSession.shared.data(from: url)
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw WeatherError.invalidResponse
+            throw RegionError.invalidResponse
         }
         
         do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
-            return try decoder.decode(ForecastData.self, from: data)
+            return try decoder.decode(CityData.self, from: data)
         } catch {
-            throw WeatherError.invalidData
+            throw RegionError.invalidData
         }
     }
 }
 
-enum WeatherError: Error {
+enum RegionError: Error {
     case invalidURL
     case invalidResponse
     case invalidData
