@@ -102,7 +102,6 @@ struct HomeView: View {
                 
                 Spacer()
             }
-//            .padding()
         }
         .task {
             do {

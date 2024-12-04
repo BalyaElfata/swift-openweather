@@ -1,10 +1,3 @@
-//
-//  OptionsList.swift
-//  Swift_OpenWeather
-//
-//  Created by Balya Elfata on 04/12/24.
-//
-
 import SwiftUI
 
 struct SearchableDropdown: View {
@@ -22,7 +15,7 @@ struct SearchableDropdown: View {
                             viewModel.provinceCode = viewModel.provinces.first(where: { $0.name == viewModel.selectedProvince })?.code ?? ""
                             viewModel.isSelectingProvince = false
                         } else {
-                            viewModel.selectedCity = option
+                            viewModel.selectedCity = String(option.dropFirst(5))
                             viewModel.isSelectingCity = false
                         }
                     } label: {

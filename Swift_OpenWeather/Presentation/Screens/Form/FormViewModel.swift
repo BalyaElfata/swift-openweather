@@ -2,10 +2,6 @@ import Combine
 import SwiftUI
 
 class FormViewModel: ObservableObject {
-//    @Published var provinces: [String] = []
-//    @Published var cities: [String] = []
-    @Published var selectedProvince: String = "Pilih Provinsi"
-    @Published var selectedCity: String = "Pilih Kota"
     @Published var searchText = ""
     @Published var name: String = ""
     @Published var isValid: Bool = false
@@ -13,33 +9,16 @@ class FormViewModel: ObservableObject {
     
     @Published var isSelectingProvince: Bool = false
     @Published var isSelectingCity: Bool = false
+    @Published var selectedProvince: String = "Pilih Provinsi"
+    @Published var selectedCity: String = "Pilih Kota"
+    @Published var provinceCode: String = ""
     
     @Published var provinceData: ProvinceData? = nil
     @Published var cityData: CityData? = nil
     @Published var provinces: [Province] = []
     @Published var cities: [City] = []
-    @Published var province: Province?
-    @Published var city: City?
-    @Published var provinceCode: String = ""
     
     private let regionService = RegionService()
-
-//    private var provinceCityMapping: [String: [String]] = [:]
-//    private var cancellables = Set<AnyCancellable>()
-
-//    init() {
-//        loadProvincesAndCities()
-//    }
-
-//    private func loadProvincesAndCities() {
-//        provinceCityMapping = [
-//            "Jawa Barat": ["Bandung", "Bogor", "Bekasi"],
-//            "DKI Jakarta": ["Jakarta Utara", "Jakarta Barat", "Jakarta Selatan"],
-//            "Jawa Tengah": ["Semarang", "Solo", "Yogyakarta"]
-//        ]
-//
-//        provinces = provinceCityMapping.keys.sorted()
-//    }
 
     func getProvinces() async throws {
         do {
@@ -70,14 +49,6 @@ class FormViewModel: ObservableObject {
             print("Unexpected region error: \(error.localizedDescription)")
         }
     }
-    
-//    func cities(for province: String) -> [String] {
-//        return provinceCityMapping[province] ?? []
-//    }
-
-//    func validateInputs(name: String, province: String, city: String) -> Bool {
-//        return !name.isEmpty && !province.isEmpty && !city.isEmpty
-//    }
     
     func validateForm() {
         isValid = !name.isEmpty && selectedProvince != "Pilih Provinsi" && selectedCity != "Pilih Kota"

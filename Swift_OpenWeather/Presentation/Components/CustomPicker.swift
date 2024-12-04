@@ -49,33 +49,6 @@ struct CustomPicker: View {
                 )
             }
         }
-            
-//            if isExpanded {
-//                VStack {
-//                    TextField("Search...", text: $viewModel.searchText)
-//                        .textFieldStyle(RoundedBorderTextFieldStyle())
-//                        .padding()
-//                    
-//                    ScrollView {
-//                        ForEach(filteredOptions, id: \.self) { option in
-//                            Text(option)
-//                                .padding()
-//                                .onTapGesture {
-//                                    if type == .province {
-//                                        viewModel.selectedProvince = option
-//                                    } else {
-//                                        viewModel.selectedCity = option
-//                                    }
-//                                    isExpanded = false
-//                                }
-//                        }
-//                    }
-//                }
-//                .background(Color.white)
-//                .cornerRadius(8)
-//                .shadow(radius: 5)
-//            }
-//        }
     }
 }
 #Preview {
