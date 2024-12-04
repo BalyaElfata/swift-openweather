@@ -11,7 +11,7 @@ struct SearchableDropdown: View {
             if networkManager.isConnected == false {
                 ContentUnavailableView("Network Error", systemImage: "wifi.slash", description: Text("Koneksi Error. Cek kembali koneksi anda dan ulangi."))
             } else if $viewModel.provinces.isEmpty {
-                ContentUnavailableView("API Error", systemImage: "exclamationmark.circle", description: Text("Error mengambil data \(type == .province ? "provinsi" : "kota")."))
+                ContentUnavailableView("API Error", systemImage: "wifi.exclamationmark", description: Text("Error mengambil data \(type == .province ? "provinsi" : "kota") dari API."))
             } else {
                 List {
                     ForEach(searchResults, id: \.self) { option in

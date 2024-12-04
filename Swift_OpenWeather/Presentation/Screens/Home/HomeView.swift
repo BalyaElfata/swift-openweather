@@ -24,7 +24,7 @@ struct HomeView: View {
                 } else if viewModel.currentWeather == nil {
                     ContentUnavailableView("API Error", systemImage: "wifi.exclamationmark", description: Text("Error mengambil data cuaca di kota \(city)."))
                 } else if $viewModel.forecast.isEmpty {
-                    ContentUnavailableView("API Error", systemImage: "exclamationmark.circle", description: Text("Error mengambil data ramalan cuaca di kota \(city)."))
+                    ContentUnavailableView("API Error", systemImage: "exclamationmark.circle", description: Text("Error mengambil data ramalan cuaca di kota \(city) dari API."))
                 } else {
                     VStack {
                         if let weather = viewModel.currentWeather {
