@@ -7,25 +7,29 @@ struct SearchableDropdown: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(searchResults, id: \.self) { option in
-                    Button {
-                        if type == .province {
-                            viewModel.selectedProvince = option
-                            viewModel.provinceCode = viewModel.provinces.first(where: { $0.name == viewModel.selectedProvince })?.code ?? ""
-                            viewModel.isSelectingProvince = false
-                        } else {
-                            viewModel.selectedCity = String(option.dropFirst(5))
-                            viewModel.isSelectingCity = false
+            if $viewModel.provinces.isEmpty {
+                ContentUnavailableView("Error", systemImage: "exclamationmark.circle", description: Text("Error mengambil data provinsi. Cek kembali koneksi anda dan ulangi."))
+            } else {
+                List {
+                    ForEach(searchResults, id: \.self) { option in
+                        Button {
+                            if type == .province {
+                                viewModel.selectedProvince = option
+                                viewModel.provinceCode = viewModel.provinces.first(where: { $0.name == viewModel.selectedProvince })?.code ?? ""
+                                viewModel.isSelectingProvince = false
+                            } else {
+                                viewModel.selectedCity = String(option.dropFirst(5))
+                                viewModel.isSelectingCity = false
+                            }
+                        } label: {
+                            Text(option)
+                                .foregroundStyle(.black)
                         }
-                    } label: {
-                        Text(option)
-                            .foregroundStyle(.black)
                     }
                 }
+                .searchable(text: $viewModel.searchText)
             }
         }
-        .searchable(text: $viewModel.searchText)
     }
 
     var searchResults: [String] {
