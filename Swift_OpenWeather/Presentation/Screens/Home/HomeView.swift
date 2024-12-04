@@ -19,7 +19,7 @@ struct HomeView: View {
                 Spacer()
                 
                 if $viewModel.forecast.isEmpty {
-                    ContentUnavailableView("Error", systemImage: "exclamationmark.circle", description: Text("Error mengambil data cuaca di kota \(city)"))
+                    ContentUnavailableView("Error", systemImage: "exclamationmark.circle", description: Text("Error mengambil data cuaca di kota \(city). Cek kembali koneksi anda dan ulangi."))
                 } else {
                     VStack {
                         if let weather = viewModel.currentWeather {
