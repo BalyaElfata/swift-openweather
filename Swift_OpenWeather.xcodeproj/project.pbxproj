@@ -22,6 +22,7 @@
 		2159F4D42CFF8F8B006DEAA7 /* ProvinceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2159F4D32CFF8F88006DEAA7 /* ProvinceData.swift */; };
 		2159F4D62CFF911A006DEAA7 /* CityData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2159F4D52CFF9117006DEAA7 /* CityData.swift */; };
 		2159F4DC2D000B92006DEAA7 /* SearchableDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2159F4DB2D000B92006DEAA7 /* SearchableDropdown.swift */; };
+		2159F4DE2D001C17006DEAA7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2159F4DD2D001C09006DEAA7 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		2159F4D32CFF8F88006DEAA7 /* ProvinceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvinceData.swift; sourceTree = "<group>"; };
 		2159F4D52CFF9117006DEAA7 /* CityData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityData.swift; sourceTree = "<group>"; };
 		2159F4DB2D000B92006DEAA7 /* SearchableDropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableDropdown.swift; sourceTree = "<group>"; };
+		2159F4DD2D001C09006DEAA7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 		2159F4C52CFE0802006DEAA7 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				2159F4DD2D001C09006DEAA7 /* NetworkManager.swift */,
 				2159F4D12CFF8DB4006DEAA7 /* RegionService.swift */,
 				2159F4C12CFE07AC006DEAA7 /* WeatherService.swift */,
 			);
@@ -274,6 +277,7 @@
 				2159F4AD2CFDFDA1006DEAA7 /* WeatherData.swift in Sources */,
 				2159F4CD2CFE2C7D006DEAA7 /* ForecastData.swift in Sources */,
 				2159F4AE2CFDFDA1006DEAA7 /* Swift_OpenWeatherApp.swift in Sources */,
+				2159F4DE2D001C17006DEAA7 /* NetworkManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
