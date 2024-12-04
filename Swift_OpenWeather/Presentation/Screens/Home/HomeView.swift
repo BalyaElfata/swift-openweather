@@ -7,7 +7,9 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color.blue.opacity(0.6), Color.cyan.opacity(0.6)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+            if !viewModel.forecast.isEmpty {
+                LinearGradient(colors: [Color.blue.opacity(0.6), Color.cyan.opacity(0.6)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+            }
             
             VStack() {
                 Text(viewModel.greetingMessage)
