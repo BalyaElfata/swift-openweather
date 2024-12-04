@@ -20,7 +20,7 @@ struct HomeView: View {
                 Spacer()
                 
                 if networkManager.isConnected == false {
-                    ContentUnavailableView("Network Error", systemImage: "wifi.exclamationmark", description: Text("Koneksi Error. Cek kembali koneksi anda dan ulangi."))
+                    ContentUnavailableView("Network Error", systemImage: "wifi.slash", description: Text("Koneksi Error. Cek kembali koneksi anda dan ulangi."))
                 } else if viewModel.currentWeather == nil {
                     ContentUnavailableView("API Error", systemImage: "wifi.exclamationmark", description: Text("Error mengambil data cuaca di kota \(city)."))
                 } else if $viewModel.forecast.isEmpty {
