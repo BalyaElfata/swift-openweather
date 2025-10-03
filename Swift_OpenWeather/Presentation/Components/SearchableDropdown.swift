@@ -24,7 +24,12 @@ struct SearchableDropdown: View {
                                     viewModel.provinceCode = viewModel.provinces.first(where: { $0.name == viewModel.selectedProvince })?.code ?? ""
                                     viewModel.isSelectingProvince = false
                                 } else {
-                                    viewModel.selectedCity = String(option.dropFirst(5))
+                                    viewModel.selectedCity = String(
+                                        option
+                                            .split(separator: " ")
+                                            .dropFirst()
+                                            .joined(separator: " ")
+                                    )
                                     viewModel.isSelectingCity = false
                                 }
                             } label: {
