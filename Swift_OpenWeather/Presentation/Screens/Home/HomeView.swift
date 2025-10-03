@@ -100,11 +100,11 @@ struct HomeView: View {
                             }
                         }
                         .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundStyle(Color.white)
-                        )
-                        .padding(.horizontal)
+//                        .background(
+//                            RoundedRectangle(cornerRadius: 10)
+//                                .foregroundStyle(Color.white)
+//                        )
+//                        .padding(.horizontal)
                     }
                 
                 Spacer()
